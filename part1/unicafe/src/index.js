@@ -16,18 +16,18 @@ const Statistics =(props) => {
   } else {
     return (
       <div>
-        <Statistic text='good' count={stats.good} />
-        <Statistic text='neutral' count={stats.neutral} />
-        <Statistic text='bad' count={stats.bad} />
-        <Statistic text='all' count={stats.total} />
-        <Statistic text='average' count={stats.average} />
-        <Statistic text='positive' count={stats.positivePercentage} />
+        <Statistic text='good' value={stats.good} />
+        <Statistic text='neutral' value={stats.neutral} />
+        <Statistic text='bad' value={stats.bad} />
+        <Statistic text='all' value={stats.total} />
+        <Statistic text='average' value={stats.average} />
+        <Statistic text='positive' value={stats.positivePercentage} />
       </div>
     )
   }
 }
 
-const Statistic = ({text, count}) => <div><p>{text} {count}</p></div>
+const Statistic = ({text, value}) => <div><p>{text} {value}</p></div>
 
 const App = () => {
   // save clicks of each button to own state
