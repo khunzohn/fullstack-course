@@ -11,16 +11,20 @@ const Button = ({text,handleClick}) => (
 
 const Statistics =(props) => {
   const stats = props.statistics
-  return (
-    <div>
-      <Statistic text='good' count={stats.good} />
-      <Statistic text='neutral' count={stats.neutral} />
-      <Statistic text='bad' count={stats.bad} />
-      <Statistic text='all' count={stats.total} />
-      <Statistic text='average' count={stats.average} />
-      <Statistic text='positive' count={stats.positivePercentage} />
-    </div>
-  )
+  if(stats.total === 0) {
+    return <div><p>No feedback given</p></div>
+  } else {
+    return (
+      <div>
+        <Statistic text='good' count={stats.good} />
+        <Statistic text='neutral' count={stats.neutral} />
+        <Statistic text='bad' count={stats.bad} />
+        <Statistic text='all' count={stats.total} />
+        <Statistic text='average' count={stats.average} />
+        <Statistic text='positive' count={stats.positivePercentage} />
+      </div>
+    )
+  }
 }
 
 const Statistic = ({text, count}) => <div><p>{text} {count}</p></div>
