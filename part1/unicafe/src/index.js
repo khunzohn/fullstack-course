@@ -17,6 +17,8 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  const total = good + neutral + bad
+  const average = ((good * 1) + (neutral * 0) + (bad * -1)) / total
   const increaseGoodByOne = () => {
     setGood(good+1)
   }
@@ -42,6 +44,9 @@ const App = () => {
       <Statistic text='good' count={good} />
       <Statistic text='neutral' count={neutral} />
       <Statistic text='bad' count={bad} />
+      <Statistic text='all' count={total} />
+      <Statistic text='average' count={average} />
+      <Statistic text='positive' count={(good/total)*100} />
     </div>
   )
 }
