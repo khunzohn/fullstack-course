@@ -1,5 +1,5 @@
 title 0.4: new note
-browser->server: https://studies.cs.helsinki.fi/exampleapp/new_note
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
 server-->browser: redirect location: /exampleapp/notes
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
 server-->browser: HTML-code
