@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
-  const [points, updateVote] = useState([0,0,0,0,0,0])
+  const [points, updateVote] = useState(Array.apply(null, new Array(6)).map(Number.prototype.valueOf,0))
   
   const vote = () => {
     const copy = [...points]
@@ -11,8 +11,12 @@ const App = (props) => {
     updateVote(copy)
   }
 
+  const mostVotesIndex = points.indexOf(Math.max(...points))
+
   return (
     <div>
+      <h1>Anecdot of the day</h1>
+      <br/>
       {props.anecdotes[selected]}
       <br />
       <p>has {points[selected]} votes</p>
@@ -23,6 +27,13 @@ const App = (props) => {
       <button onClick={() => setSelected(Math.floor(Math.random() * 5))}>
         next anecdote
       </button>
+      <br/>
+      <h1>Anecdot with most votes</h1>
+      <br/>
+      {props.anecdotes[mostVotesIndex]}
+      <br />
+      <p>has {points[mostVotesIndex]} votes</p>
+      <br />
     </div>
   )
 }
