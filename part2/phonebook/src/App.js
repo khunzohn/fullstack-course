@@ -27,7 +27,18 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     if(persons.map(value => value.name).includes(newName)) {
-      alert(`${newName} is already added to phonebook`)  
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        let person = persons.find(p => p.name.toLowerCase() === newName.toLowerCase())
+        let updatedPerson = {...person, number: newNumber}
+
+        personService
+          .update(updatedPerson.id, updatedPerson)
+          .then(updatedPerson => {
+            setPersons(persons.map(p => p.id === updatedPerson.id ? updatedPerson : p))
+            setNewName('')
+            setNewNumber('')    
+          })
+      }
     } else {
       const personObject = {
         name: newName,
@@ -39,6 +50,7 @@ const App = () => {
         .then(addedPerson => {
           setPersons(persons.concat(addedPerson))
           setNewName('')
+          setNewNumber('')
         })
     }
   }
@@ -58,6 +70,17 @@ const App = () => {
     setNewKeyword(event.target.value)
   }
 
+  const handleDelete = (person) => {
+    if(window.confirm(`Delete ${person.name}?`)) {
+      personService
+        .remove(person.id)
+        .then(res => {
+          console.log(`deleted`,res);
+          setPersons(persons.filter(p => p.id !== person.id))
+        })
+    }
+  }
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -69,7 +92,7 @@ const App = () => {
       
       <h2>Numbers</h2>
       
-      <Persons personsToShow={personsToShow}/>
+      <Persons personsToShow={personsToShow} handleDelete={handleDelete}/>
     </div>
   )
 }
