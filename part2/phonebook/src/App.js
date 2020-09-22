@@ -3,6 +3,7 @@ import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import Notification from './components/Notification'
+import Error from './components/Error'
 import axios from 'axios'
 import personService from './services/persons'
 
@@ -12,6 +13,7 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ newKeyword, setNewKeyword ] = useState('')
   const [ notification, setNotification] = useState(null)
+  const [ error, setError] = useState(null)
 
   useEffect(()=> {
     console.log('effect');
@@ -42,6 +44,13 @@ const App = () => {
             setNotification(`Updated ${updatedPerson.name}`)    
             setTimeout(() => {
               setNotification(null)
+            },5000)
+          })
+          .catch(error => {
+            setPersons(persons.filter(p => p.id !== updatedPerson.id))
+            setError(`Information of ${updatedPerson.name} has already been removed from server`)  
+            setTimeout(() => {
+              setError(null)
             },5000)
           })
       }
@@ -96,6 +105,7 @@ const App = () => {
       <h1>Phonebook</h1>
 
       <Notification message={notification}/>
+      <Error message={error}/>
 
       <Filter newKeyword={newKeyword}  handleKeywordChange={handleKeywordChange}/>
 
