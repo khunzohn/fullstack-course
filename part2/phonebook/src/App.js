@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 import axios from 'axios'
 import personService from './services/persons'
 
@@ -10,6 +11,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newKeyword, setNewKeyword ] = useState('')
+  const [ notification, setNotification] = useState(null)
 
   useEffect(()=> {
     console.log('effect');
@@ -36,7 +38,11 @@ const App = () => {
           .then(updatedPerson => {
             setPersons(persons.map(p => p.id === updatedPerson.id ? updatedPerson : p))
             setNewName('')
-            setNewNumber('')    
+            setNewNumber('')
+            setNotification(`Updated ${updatedPerson.name}`)    
+            setTimeout(() => {
+              setNotification(null)
+            },5000)
           })
       }
     } else {
@@ -51,6 +57,10 @@ const App = () => {
           setPersons(persons.concat(addedPerson))
           setNewName('')
           setNewNumber('')
+          setNotification(`Added ${addedPerson.name}`)
+          setTimeout(() => {
+            setNotification(null)
+          },5000)
         })
     }
   }
@@ -84,6 +94,9 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+
+      <Notification message={notification}/>
+
       <Filter newKeyword={newKeyword}  handleKeywordChange={handleKeywordChange}/>
 
       <h2>add a new</h2>
